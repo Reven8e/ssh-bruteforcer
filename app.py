@@ -1,3 +1,5 @@
+# © SSH Bruteforcer- Made by Yuval Simon. For www.bogan.cool
+
 import time
 from pexpect import pxssh
 from secrets import PASS, NAME, LOCAL_IP

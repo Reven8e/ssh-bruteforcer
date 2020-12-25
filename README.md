@@ -1,4 +1,4 @@
-# SSH-Bruteforcer
+# Python SSH-Bruteforcer
 
 
 ## First Commit.
