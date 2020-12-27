@@ -1,4 +1,13 @@
 # Python SSH-Bruteforcer
 
 
-## First Commit.
+- app.py- Original.
+- w_threading.py- Threaded version.
+
+
+
+
+#### Educational purposes only!
+
+
+#### If you find a bug please report it.

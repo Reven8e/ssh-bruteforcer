@@ -2,3 +2,4 @@ env
 .vscode
 rockyou.txt
 secrets.py
+__pycache__
